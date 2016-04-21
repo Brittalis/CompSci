@@ -120,6 +120,7 @@ public class BlackJack {
 
 			System.out.println("dealer stands");
 			System.out.println("Dealers Hand:\n");
+			dealersHand.showHand();
 			if (playerWon()) {
 				bankRoll += bet;
 			} else {
@@ -158,9 +159,9 @@ public class BlackJack {
 		if (playersHand.evalauteHand() > dealersHand.evalauteHand()) {
 			System.out.println("player wins");
 			return true;
-		} else if (playersHand.evalauteHand() < dealersHand.evalauteHand()) {
+		} else if (dealersHand.evalauteHand() > playersHand.evalauteHand()) {
 			System.out.println("dealer wins");
-
+			return false;
 		}
 		return false;
 	}

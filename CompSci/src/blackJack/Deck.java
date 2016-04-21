@@ -8,7 +8,7 @@ public class Deck extends ArrayList<Card> {
 
 	public Deck() {
 		createDeck();
-	//	shuffleDeck();
+		shuffleDeck();
 	}
 
 	public void shuffleDeck() {
