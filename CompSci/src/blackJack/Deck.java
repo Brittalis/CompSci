@@ -30,6 +30,7 @@ public class Deck extends ArrayList<Card> {
 		}
 
 	}
+	//feeling lazy and dont want to do this
 /*	public void saveDeck(){
 		
 	}

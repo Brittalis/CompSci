@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class BlackJack {
-	private int bankRoll = 0;
-	private int bet = 0;
+	private int bankRoll = 1000;
+	private int bet;
 	private Deck deck = new Deck();
 	private Hand playersHand = new Hand();
 	private Hand dealersHand = new Hand();
@@ -28,7 +28,10 @@ public class BlackJack {
 				bet = Integer.parseInt(options());
 				validEntry = true;
 			} catch (NumberFormatException e) {
-				System.out.println("Thats not a valid bet!");
+				System.out.println("Thats not a valid bet! (also cannot be greater than your bankroll)");
+				validEntry = false;
+			}
+			if(bet>bankRoll){
 				validEntry = false;
 			}
 		}
