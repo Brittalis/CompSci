@@ -4,7 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class BlackJack {
+public class BlackJack
+{
 	private int bankRoll = 1000;
 	private int bet;
 	private Deck deck = new Deck();
@@ -12,50 +13,57 @@ public class BlackJack {
 	private Hand dealersHand = new Hand();
 	private boolean isPlayerDone = false;
 	boolean runGame = true;
+	boolean validEntry;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException
+	{
 		BlackJack blackjack = new BlackJack();
 		blackjack.play();
 	}
 
-	public void play() throws IOException {
+	public void play() throws IOException
+	{
 
 		System.out.println("What would you like your bet to be?");
-		boolean validEntry = false;
-		while (validEntry == false) {
+		validEntry = false;
+		while (validEntry == false)
+		{
 
-			try {
+			try
+			{
 				bet = Integer.parseInt(options());
 				validEntry = true;
-			} catch (NumberFormatException e) {
-				System.out.println("Thats not a valid bet! (also cannot be greater than your bankroll)");
+			} catch (NumberFormatException e)
+			{
+				System.out
+						.println("Thats not a valid bet! (also cannot be greater than your bankroll)");
 				validEntry = false;
 			}
-			if(bet>bankRoll){
+			if (bet > bankRoll)
+			{
 				validEntry = false;
 			}
 		}
 		// System.out.println(bet + "");
-		while (runGame) {
+		while (runGame)
+		{
 			System.out.print("deal, hit, double, stand, exit: ");
-			if (isPlayerDone == false) {
+			if (isPlayerDone == false)
+			{
 				validEntry = false;
-				switch (options()) {
+				switch (options())
+				{
 				case "deal":
 					deal();
-					validEntry = true;
 					break;
 				case "hit":
 					hit();
-					validEntry = true;
 					break;
 				case "double":
 					doubleDown();
-					validEntry = true;
 					break;
 				case "stand":
 					stand();
-					validEntry = true;
 					break;
 				case "exit":
 					runGame = false;
@@ -68,38 +76,51 @@ public class BlackJack {
 				}
 				// System.out.println("" + playersHand.evalauteHand());
 			}
-			if (validEntry) {
+			if (validEntry)
+			{
 				endOfRound();
 			}
 		}
 	}
 
-	public void stand() {
+	public void stand()
+	{
 
-		if (playersHand.size() == 0) {
+		if (playersHand.size() == 0)
+		{
 			System.out.println("you need cards to stand");
-		} else {
+		} else
+		{
 			isPlayerDone = true;
+			validEntry = true;
 		}
 
 	}
 
-	public void doubleDown() {
-		if (playersHand.size() == 2) {
+	public void doubleDown()
+	{
+		if (playersHand.size() == 2)
+		{
 			System.out.println("your bet has been doubled!!!");
 			bet *= 2;
 			deck.deal(playersHand);
-		} else {
+			validEntry = true;
+		} else
+		{
 			System.out.println("You must have exactly two cards to doubledown");
 		}
 		playersHand.showHand();
 	}
 
-	public void hit() {
+	public void hit()
+	{
 
-		if (playersHand.size() == 0) {
+		if (playersHand.size() == 0)
+		{
 			System.out.println("You must deal cards first!\n\n");
-		} else {
+		} else
+		{
+			validEntry = true;
 			deck.deal(playersHand);
 		}
 		System.out.println("Your hand:\n");
@@ -107,66 +128,82 @@ public class BlackJack {
 
 	}
 
-	public void endOfRound() {
+	public void endOfRound()
+	{
 
-		if (dealersHand.evalauteHand() < 17) {
+		if (dealersHand.evalauteHand() < 17)
+		{
 			System.out.println("\n\n");
 			System.out.println("dealer hits");
 			System.out.println("Dealers Hand:\n");
 			deck.deal(dealersHand);
 
 			dealersHand.showHand();
-		} else if (isPlayerDone == true) {
+		} else if (isPlayerDone == true)
+		{
 
 			System.out.println("dealer stands");
 			System.out.println("Dealers Hand:\n");
 			dealersHand.showHand();
-			if (playerWon()) {
+			if (playerWon())
+			{
 				bankRoll += bet;
-			} else {
+			} else
+			{
 				bankRoll -= bet;
 			}
 			runGame = false;
-		} else {
+		} else
+		{
 			System.out.println("dealer stands");
 		}
 
 	}
 
-	public boolean playerWon() {
+	public boolean playerWon()
+	{
 		boolean dealerBust = false;
 		boolean playerBust = false;
 
-		if (playersHand.evalauteHand() > 21) {
+		if (playersHand.evalauteHand() > 21)
+		{
 			playerBust = true;
 		}
-		if (dealersHand.evalauteHand() > 21) {
+		if (dealersHand.evalauteHand() > 21)
+		{
 			dealerBust = true;
 		}
-		if (dealerBust || playerBust) {
-			if (playerBust) {
+		if (dealerBust || playerBust)
+		{
+			if (playerBust)
+			{
 				System.out.println("dealer wins");
 				return false;
-			} else if (dealerBust) {
+			} else if (dealerBust)
+			{
 				System.out.println("player wins");
 				return true;
-			} else if (dealerBust && playerBust) {
+			} else if (dealerBust && playerBust)
+			{
 				System.out.println("dealer wins ties!");
 				return false;
 			}
 
 		}
-		if (playersHand.evalauteHand() > dealersHand.evalauteHand()) {
+		if (playersHand.evalauteHand() > dealersHand.evalauteHand())
+		{
 			System.out.println("player wins");
 			return true;
-		} else if (dealersHand.evalauteHand() > playersHand.evalauteHand()) {
+		} else if (dealersHand.evalauteHand() > playersHand.evalauteHand())
+		{
 			System.out.println("dealer wins");
 			return false;
 		}
 		return false;
 	}
 
-	public void deal() {
+	public void deal()
+	{
 		deck.deal(playersHand);
 		deck.deal(playersHand);
 		deck.deal(dealersHand);
@@ -175,7 +212,8 @@ public class BlackJack {
 		System.out.println("\n");
 	}
 
-	private String options() throws IOException {
+	private String options() throws IOException
+	{
 
 		InputStreamReader input = new InputStreamReader(System.in);
 		BufferedReader BufferedReader = new BufferedReader(input);
